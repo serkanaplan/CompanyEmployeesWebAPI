@@ -13,6 +13,7 @@ public class CompaniesController(IServiceManager service) : ControllerBase
 {
     private readonly IServiceManager _service = service;
 
+    // [HttpHead]
     [HttpGet]
     public async Task<IActionResult> GetCompanies()
     {
@@ -73,5 +74,13 @@ public class CompaniesController(IServiceManager service) : ControllerBase
         await _service.CompanyService.UpdateCompanyAsync(id, company, trackChanges: true);
 
         return NoContent();
+    }
+
+    // body dönme header döner. olmasa da olur
+    [HttpOptions]
+    public IActionResult GetCompaniesOptions()
+    {
+        Response.Headers.Allow = "GET, OPTIONS, POST, PUT, DELETE";
+        return Ok();
     }
 }
