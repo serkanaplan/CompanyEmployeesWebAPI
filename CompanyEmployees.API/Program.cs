@@ -21,23 +21,28 @@ builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
+builder.Services.ConfigureVersioning();
 
 // patch işlemi için
 NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson().Services.BuildServiceProvider()
 .GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters.OfType<NewtonsoftJsonPatchInputFormatter>().First();
 
 //data happer(veri şekillendirme) için
-builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>(); 
+builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
 
 builder.Services.AddScoped<ValidationFilterAttribute>();//eğer filter global olmayacaksa , her controller ve ya action metod için ayrı ayrı çağıracaksan scopped olarak ekle 
 
-//GetJsonPatchInputFormatter metodunu patch işlemi için ekledik. controller yapısını sunum katmanına taşıdık ve aktifleyebilmek için AddApplicationPart kullandık
 builder.Services.AddControllers(config =>
 {
+
+    config.CacheProfiles.Add("120SecondsDuration", new CacheProfile { Duration = 120 });
     config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
     // config.Filters.Add(new  ValidationFilterAttribute());// global filter ekleme yöntemi. Tüm kontrollerlar etkilenecek
 })
+//GetJsonPatchInputFormatter metodunu patch işlemi için ekledik. controller yapısını sunum katmanına taşıdık ve aktifleyebilmek için AddApplicationPart kullandık
 .AddApplicationPart(typeof(CompanyEmployees.Presentation.AssemblyReference).Assembly).AddCustomCSVFormatter();
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

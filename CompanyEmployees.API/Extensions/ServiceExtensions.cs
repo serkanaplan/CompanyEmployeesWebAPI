@@ -1,7 +1,10 @@
 
 using CompanyEmployees.API.OutputFortmatter;
+using CompanyEmployees.Presentation.Controllers;
 using Contracts;
 using LoggerService;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
@@ -19,6 +22,7 @@ public static class ServiceExtensions
         .AllowAnyMethod() // Tüm  HTTP  yöntemlerine  izin  veren  WithMethods("POST",  "GET")  yalnızca  belirli  HTTP  yöntemlerine  izin  verecektir
         .AllowAnyHeader()
         .WithExposedHeaders("X-Pagination"));// istemci  uygulamasının  yeni  X-Pagination'ı  okumasını  sağlamak  için
+
     });
 
 
@@ -47,6 +51,23 @@ public static class ServiceExtensions
     => services.AddSqlServer<RepositoryContext>(configuration.GetConnectionString("sqlConnection"));
 
 
-    public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) 
+    public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder)
     => builder.AddMvcOptions(config => config.OutputFormatters.Add(new CsvOutputFormatter()));
+
+
+    public static void ConfigureVersioning(this IServiceCollection services)
+    {
+        services.AddApiVersioning(opt =>
+        {
+            opt.ReportApiVersions = true;
+            opt.AssumeDefaultVersionWhenUnspecified = true;
+            opt.DefaultApiVersion = new ApiVersion(1, 0);
+            opt.ApiVersionReader = new HeaderApiVersionReader("api-version"); //hem header versioning 
+            opt.ApiVersionReader = new QueryStringApiVersionReader("api-version"); //hem de query string versioning
+
+            //istersek versiyonlama işini controllerlardaki [ApiVersion("2.0")] yerine merkezi bir yerden de atayabiliriz. buradaki gibi, böylece controller sınıflarındaki [ApiVersion("2.0")] gösterimlerini kaldırabiliriz
+            // opt.Conventions.Controller<CompaniesController>().HasApiVersion(new ApiVersion(1, 0));
+            // opt.Conventions.Controller<CompaniesV2Controller>().HasDeprecatedApiVersion(new ApiVersion(2, 0));
+        });
+    }
 }

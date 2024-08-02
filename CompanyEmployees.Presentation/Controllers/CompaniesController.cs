@@ -6,7 +6,7 @@ using Shared.DTO;
 
 namespace CompanyEmployees.Presentation.Controllers;
 
-
+[ApiVersion("1.0")]
 [Route("api/[controller]")]
 [ApiController]
 public class CompaniesController(IServiceManager service) : ControllerBase
