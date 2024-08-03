@@ -25,6 +25,7 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.AddAuthentication(); 
 builder.Services.ConfigureIdentity(); 
 builder.Services.ConfigureJWT(builder.Configuration); 
+builder.Services.AddJwtConfiguration(builder.Configuration);
 
 // patch işlemi için
 NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson().Services.BuildServiceProvider()
