@@ -8,8 +8,8 @@ public static class RepositoryEmployeeExtensions
 {
     public static IQueryable<Employee> FilterEmployees(this IQueryable<Employee> employees, uint minAge, uint maxAge)
     => employees.Where(e => (e.Age >= minAge && e.Age <= maxAge));
-    
-    
+
+
     public static IQueryable<Employee> Search(this IQueryable<Employee> employees, string searchTerm)
     {
         if (string.IsNullOrWhiteSpace(searchTerm)) return employees;
@@ -21,7 +21,7 @@ public static class RepositoryEmployeeExtensions
     public static IQueryable<Employee> Sort(this IQueryable<Employee> employees, string orderByQueryString)
     {
         if (string.IsNullOrWhiteSpace(orderByQueryString)) return employees.OrderBy(e => e.Name);
-    
+
         //  OrderQueryBuilder dosyasına taşındı
         // var orderParams = orderByQueryString.Trim().Split(',');
         // var propertyInfos = typeof(Employee).GetProperties(BindingFlags.Public |BindingFlags.Instance);

@@ -1,6 +1,6 @@
 using System.Dynamic;
 using System.Reflection;
-using Contracts;
+using Contracts.OtherContracts;
 
 namespace Service;
 
@@ -8,7 +8,7 @@ public class DataShaper<T> : IDataShaper<T> where T : class
 {
     public PropertyInfo[] Properties { get; set; }
     public DataShaper() => Properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-    
+
     public IEnumerable<ExpandoObject> ShapeData(IEnumerable<T> entities, string fieldsString)
     {
         var requiredProperties = GetRequiredProperties(fieldsString);

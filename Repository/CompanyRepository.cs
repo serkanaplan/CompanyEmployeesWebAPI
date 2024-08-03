@@ -1,4 +1,4 @@
-using Contracts;
+using Contracts.RepositoryContracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,11 +1,13 @@
 using AutoMapper;
-using Contracts;
+using Contracts.OtherContracts;
+using Contracts.RepositoryContracts;
+using Contracts.SerciceContracts;
+using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;
-using Service.Contracts;
-using Shared.DTO;
 
 namespace Service;
+
 internal sealed class CompanyService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper) : ICompanyService
 {
     private readonly IRepositoryManager _repository = repository;

@@ -1,11 +1,12 @@
 using System.Dynamic;
 using AutoMapper;
-using Contracts;
+using Contracts.OtherContracts;
+using Contracts.RepositoryContracts;
+using Contracts.SerciceContracts;
+using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;
-using Service.Contracts;
-using Shared.DTO;
-using Shared.RequestFeatures;
+using Entities.RequestFeatures;
 
 namespace Service;
 
@@ -38,7 +39,7 @@ internal sealed class EmployeeService(IRepositoryManager repository, ILoggerMana
 
         var shapedData = _dataShaper.ShapeData(employeesDto,employeeParameters.Fields); 
         // return (employees: employeesDto, metaData: employeesWithMetaData.MetaData); //shape data ekledik oyuzden bunu yoruma aldık
-        
+    
         return (employees: shapedData, metaData: employeesWithMetaData.MetaData); 
     }
 

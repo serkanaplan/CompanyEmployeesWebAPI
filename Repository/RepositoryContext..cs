@@ -13,7 +13,7 @@ public class RepositoryContext(DbContextOptions options) : IdentityDbContext<Use
     {
 
         base.OnModelCreating(modelBuilder);
-        
+    
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(RepositoryContext).Assembly);
 
         modelBuilder.Entity<Employee>()
