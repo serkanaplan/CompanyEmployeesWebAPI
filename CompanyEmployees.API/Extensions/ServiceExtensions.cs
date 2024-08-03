@@ -1,4 +1,5 @@
 
+using AspNetCoreRateLimit;
 using CompanyEmployees.API.OutputFortmatter;
 using CompanyEmployees.Presentation.Controllers;
 using Contracts;
@@ -55,6 +56,7 @@ public static class ServiceExtensions
     => builder.AddMvcOptions(config => config.OutputFormatters.Add(new CsvOutputFormatter()));
 
 
+<<<<<<< HEAD
     public static void ConfigureVersioning(this IServiceCollection services)
     {
         services.AddApiVersioning(opt =>
@@ -69,5 +71,17 @@ public static class ServiceExtensions
             // opt.Conventions.Controller<CompaniesController>().HasApiVersion(new ApiVersion(1, 0));
             // opt.Conventions.Controller<CompaniesV2Controller>().HasDeprecatedApiVersion(new ApiVersion(2, 0));
         });
+=======
+    public static void ConfigureRateLimitingOptions(this IServiceCollection services)
+    {
+        var rateLimitRules = new List<RateLimitRule> { new(){Endpoint = "*",  Limit = 3,Period = "5m"} };
+
+        services.Configure<IpRateLimitOptions>(opt => opt.GeneralRules = rateLimitRules);
+
+        services.AddSingleton<IRateLimitCounterStore,MemoryCacheRateLimitCounterStore>();
+        services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+        services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+        services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+>>>>>>> rate_limit
     }
 }

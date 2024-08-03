@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using CompanyEmployees.API.Extensions;
 using CompanyEmployees.Presentation.Filters;
 using Contracts;
@@ -22,6 +23,10 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureVersioning();
+
+//rate limit
+builder.Services.AddMemoryCache();//rate limiti ihtiyacı var oyuzden eklendi
+builder.Services.ConfigureRateLimitingOptions(); 
 
 // patch işlemi için
 NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson().Services.BuildServiceProvider()
@@ -69,6 +74,7 @@ if (app.Environment.IsProduction())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All });
+app.UseIpRateLimiting(); 
 app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
