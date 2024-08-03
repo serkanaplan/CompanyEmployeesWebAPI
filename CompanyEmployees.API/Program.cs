@@ -22,6 +22,10 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 
+builder.Services.AddAuthentication(); 
+builder.Services.ConfigureIdentity(); 
+builder.Services.ConfigureJWT(builder.Configuration); 
+
 // patch işlemi için
 NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson().Services.BuildServiceProvider()
 .GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters.OfType<NewtonsoftJsonPatchInputFormatter>().First();
@@ -65,6 +69,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All });
 app.UseCors("CorsPolicy");
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllers();
