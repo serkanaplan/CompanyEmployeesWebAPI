@@ -36,7 +36,11 @@ public class AuthenticationController(IServiceManager service) : ControllerBase
     public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
     {
         if (!await _service.AuthenticationService.ValidateUser(user)) return Unauthorized();
-        
-        return Ok(new { Token = await _service.AuthenticationService.CreateToken()});
+
+        // return Ok(new { Token = await _service.AuthenticationService.CreateToken()});
+
+        var tokenDto = await _service.AuthenticationService.CreateToken(populateExp: true);
+
+        return Ok(tokenDto);
     }
 }
