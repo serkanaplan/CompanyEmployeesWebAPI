@@ -1,9 +1,5 @@
 
-<<<<<<< HEAD
-using AspNetCoreRateLimit;
-=======
 using System.Text;
->>>>>>> identity_and_jwt
 using CompanyEmployees.API.OutputFortmatter;
 using Contracts.OtherContracts;
 using Contracts.RepositoryContracts;
@@ -11,25 +7,16 @@ using Contracts.ServiceContracts;
 using Entities.ConfigurationModels;
 using Entities.Models;
 using LoggerService;
-<<<<<<< HEAD:CompanyEmployees.API/Extensions/ServiceExtensions.cs
-<<<<<<< HEAD
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
-=======
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
->>>>>>> identity_and_jwt
-=======
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
->>>>>>> binding_configuration_and_options_pattern:WebAPI/Extensions/ServiceExtensions.cs
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Repository;
 using Service;
+using AspNetCoreRateLimit;
+using Microsoft.OpenApi.Models;
 
 namespace CompanyEmployees.API.Extensions;
 
@@ -77,9 +64,6 @@ public static class ServiceExtensions
     => builder.AddMvcOptions(config => config.OutputFormatters.Add(new CsvOutputFormatter()));
 
 
-<<<<<<< HEAD:CompanyEmployees.API/Extensions/ServiceExtensions.cs
-<<<<<<< HEAD
-<<<<<<< HEAD
     public static void ConfigureVersioning(this IServiceCollection services)
     {
         services.AddApiVersioning(opt =>
@@ -94,21 +78,22 @@ public static class ServiceExtensions
             // opt.Conventions.Controller<CompaniesController>().HasApiVersion(new ApiVersion(1, 0));
             // opt.Conventions.Controller<CompaniesV2Controller>().HasDeprecatedApiVersion(new ApiVersion(2, 0));
         });
-=======
+    }
+
+
     public static void ConfigureRateLimitingOptions(this IServiceCollection services)
     {
-        var rateLimitRules = new List<RateLimitRule> { new(){Endpoint = "*",  Limit = 3,Period = "5m"} };
+        var rateLimitRules = new List<RateLimitRule> { new() { Endpoint = "*", Limit = 3, Period = "5m" } };
 
         services.Configure<IpRateLimitOptions>(opt => opt.GeneralRules = rateLimitRules);
 
-        services.AddSingleton<IRateLimitCounterStore,MemoryCacheRateLimitCounterStore>();
+        services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
         services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
         services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
         services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
->>>>>>> rate_limit
-=======
-=======
->>>>>>> binding_configuration_and_options_pattern:WebAPI/Extensions/ServiceExtensions.cs
+    }
+
+
     public static void ConfigureIdentity(this IServiceCollection services)
     {
         var builder = services.AddIdentity<User, IdentityRole>(o =>
@@ -152,8 +137,6 @@ public static class ServiceExtensions
                 ValidAudience = jwtConfiguration.ValidAudience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
             };
-<<<<<<< HEAD:CompanyEmployees.API/Extensions/ServiceExtensions.cs
-=======
         });
     }
 
@@ -161,21 +144,6 @@ public static class ServiceExtensions
 
     public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
     => services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
-    public static void ConfigureVersioning(this IServiceCollection services)
-    {
-        services.AddApiVersioning(opt =>
-        {
-            opt.ReportApiVersions = true;
-            opt.AssumeDefaultVersionWhenUnspecified = true;
-            opt.DefaultApiVersion = new ApiVersion(1, 0);
-            opt.ApiVersionReader = new HeaderApiVersionReader("api-version"); //hem header versioning 
-            opt.ApiVersionReader = new QueryStringApiVersionReader("api-version"); //hem de query string versioning
-
-            //istersek versiyonlama işini controllerlardaki [ApiVersion("2.0")] yerine merkezi bir yerden de atayabiliriz. buradaki gibi, böylece controller sınıflarındaki [ApiVersion("2.0")] gösterimlerini kaldırabiliriz
-            // opt.Conventions.Controller<CompaniesController>().HasApiVersion(new ApiVersion(1, 0));
-            // opt.Conventions.Controller<CompaniesV2Controller>().HasDeprecatedApiVersion(new ApiVersion(2, 0));
-        });
-    }
 
 
     public static void ConfigureSwagger(this IServiceCollection services)
@@ -225,8 +193,6 @@ public static class ServiceExtensions
                     new List<string>()
                 }
             });
->>>>>>> binding_configuration_and_options_pattern:WebAPI/Extensions/ServiceExtensions.cs
         });
->>>>>>> identity_and_jwt
     }
 }

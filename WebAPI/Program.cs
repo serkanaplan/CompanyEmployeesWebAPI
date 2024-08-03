@@ -23,22 +23,16 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureVersioning();
+builder.Services.AddAuthentication(); 
+builder.Services.ConfigureIdentity(); 
+builder.Services.ConfigureJWT(builder.Configuration); 
+builder.Services.AddJwtConfiguration(builder.Configuration);
+builder.Services.ConfigureSwagger();
 
-<<<<<<< HEAD:CompanyEmployees.API/Program.cs
 //rate limit
 builder.Services.AddMemoryCache();//rate limiti ihtiyacı var oyuzden eklendi
 builder.Services.ConfigureRateLimitingOptions(); 
 
-builder.Services.AddAuthentication(); 
-builder.Services.ConfigureIdentity(); 
-builder.Services.ConfigureJWT(builder.Configuration); 
-=======
-builder.Services.AddAuthentication();
-builder.Services.ConfigureIdentity();
-builder.Services.ConfigureJWT(builder.Configuration);
-builder.Services.AddJwtConfiguration(builder.Configuration);
-builder.Services.ConfigureSwagger();
->>>>>>> binding_configuration_and_options_pattern:WebAPI/Program.cs
 
 // patch işlemi için
 NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson().Services.BuildServiceProvider()
