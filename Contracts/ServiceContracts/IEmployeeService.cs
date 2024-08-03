@@ -3,7 +3,7 @@ using Entities.DTO;
 using Entities.Models;
 using Entities.RequestFeatures;
 
-namespace Contracts.SerciceContracts;
+namespace Contracts.ServiceContracts;
 
 public interface IEmployeeService
 {

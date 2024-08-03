@@ -1,7 +1,7 @@
 using Entities.DTO;
 using Microsoft.AspNetCore.Identity;
 
-namespace Contracts.SerciceContracts;
+namespace Contracts.ServiceContracts;
 
 public interface IAuthenticationService
 {

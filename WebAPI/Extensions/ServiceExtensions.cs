@@ -3,7 +3,7 @@ using System.Text;
 using CompanyEmployees.API.OutputFortmatter;
 using Contracts.OtherContracts;
 using Contracts.RepositoryContracts;
-using Contracts.SerciceContracts;
+using Contracts.ServiceContracts;
 using Entities.ConfigurationModels;
 using Entities.Models;
 using LoggerService;

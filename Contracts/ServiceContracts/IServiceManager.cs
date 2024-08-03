@@ -1,4 +1,4 @@
-namespace Contracts.SerciceContracts;
+namespace Contracts.ServiceContracts;
 
 public interface IServiceManager
 {

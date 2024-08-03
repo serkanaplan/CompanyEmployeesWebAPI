@@ -1,5 +1,5 @@
 using CompanyEmployees.Presentation.Filters;
-using Contracts.SerciceContracts;
+using Contracts.ServiceContracts;
 using Entities.DTO;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,7 +1,7 @@
 ﻿
 using Entities.DTO;
 
-namespace Contracts.SerciceContracts;
+namespace Contracts.ServiceContracts;
 
 public interface ICompanyService
 {

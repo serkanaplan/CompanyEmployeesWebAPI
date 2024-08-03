@@ -1,4 +1,4 @@
-using Contracts.SerciceContracts;
+using Contracts.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyEmployees.Presentation.Controllers;

@@ -2,7 +2,7 @@ using System.Dynamic;
 using AutoMapper;
 using Contracts.OtherContracts;
 using Contracts.RepositoryContracts;
-using Contracts.SerciceContracts;
+using Contracts.ServiceContracts;
 using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;

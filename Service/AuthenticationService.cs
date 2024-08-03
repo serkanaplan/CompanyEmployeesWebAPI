@@ -11,7 +11,7 @@ using Entities.ConfigurationModels;
 using Microsoft.Extensions.Options;
 using Entities.DTO;
 using Contracts.OtherContracts;
-using Contracts.SerciceContracts;
+using Contracts.ServiceContracts;
 
 
 namespace Service;
