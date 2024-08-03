@@ -1,26 +1,22 @@
 using AutoMapper;
-using Contracts;
+using Contracts.OtherContracts;
+using Contracts.RepositoryContracts;
+using Contracts.ServiceContracts;
+using Entities.ConfigurationModels;
+using Entities.DTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Service.Contracts;
-using Shared.DTO;
+using Microsoft.Extensions.Options;
 
 namespace Service;
 
 // public sealed class ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger,IMapper mapper) : IServiceManager
-public sealed class ServiceManager : IServiceManager
+// public sealed class ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper, IDataShaper<EmployeeDto> dataShaper, UserManager<User> userManager, IConfiguration configuration) : IServiceManager
+public sealed class ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper, IDataShaper<EmployeeDto> dataShaper, UserManager<User> userManager, IOptions<JwtConfiguration> configuration) : IServiceManager
 {
-    private readonly Lazy<ICompanyService> _companyService;
-    private readonly Lazy<IEmployeeService> _employeeService;
-    private readonly Lazy<IAuthenticationService> _authenticationService; 
-
-    public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger,IMapper mapper,IDataShaper<EmployeeDto> dataShaper,UserManager<User> userManager, IConfiguration configuration)
-    {
-        _companyService = new(() => new CompanyService(repositoryManager, logger ,mapper));
-        _employeeService = new(() => new EmployeeService(repositoryManager, logger, mapper,dataShaper));
-        _authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(logger, mapper, userManager,configuration)); 
-    }
+    private readonly Lazy<ICompanyService> _companyService = new(() => new CompanyService(repositoryManager, logger, mapper));
+    private readonly Lazy<IEmployeeService> _employeeService = new(() => new EmployeeService(repositoryManager, logger, mapper, dataShaper));
+    private readonly Lazy<IAuthenticationService> _authenticationService = new(() => new AuthenticationService(logger, mapper, userManager, configuration));
 
     public ICompanyService CompanyService => _companyService.Value;
     public IEmployeeService EmployeeService => _employeeService.Value;

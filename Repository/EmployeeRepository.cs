@@ -1,8 +1,9 @@
 using Contracts;
+using Contracts.RepositoryContracts;
 using Entities.Models;
+using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using Repository.Extensions;
-using Shared.RequestFeatures;
 
 namespace Repository;
 

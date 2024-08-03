@@ -1,4 +1,4 @@
-using Contracts;
+using Contracts.RepositoryContracts;
 
 namespace Repository;
 
