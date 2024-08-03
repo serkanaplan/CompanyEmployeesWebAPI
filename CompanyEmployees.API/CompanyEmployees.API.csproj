@@ -8,7 +8,11 @@
 
 
   <ItemGroup>
+<<<<<<< HEAD
     <PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
+=======
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
+>>>>>>> identity_and_jwt
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

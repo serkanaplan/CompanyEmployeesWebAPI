@@ -1,12 +1,23 @@
 
+<<<<<<< HEAD
 using AspNetCoreRateLimit;
+=======
+using System.Text;
+>>>>>>> identity_and_jwt
 using CompanyEmployees.API.OutputFortmatter;
 using CompanyEmployees.Presentation.Controllers;
 using Contracts;
+using Entities.Models;
 using LoggerService;
+<<<<<<< HEAD
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+=======
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+>>>>>>> identity_and_jwt
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Repository;
 using Service;
 using Service.Contracts;
@@ -57,6 +68,7 @@ public static class ServiceExtensions
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public static void ConfigureVersioning(this IServiceCollection services)
     {
         services.AddApiVersioning(opt =>
@@ -83,5 +95,47 @@ public static class ServiceExtensions
         services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
         services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
 >>>>>>> rate_limit
+=======
+    public static void ConfigureIdentity(this IServiceCollection services)
+    {
+        var builder = services.AddIdentity<User, IdentityRole>(o =>
+        {
+            o.Password.RequireDigit = true;
+            o.Password.RequireLowercase = false;
+            o.Password.RequireUppercase = false;
+            o.Password.RequireNonAlphanumeric = false;
+            o.Password.RequiredLength = 10;
+            o.User.RequireUniqueEmail = true;
+        })
+        .AddEntityFrameworkStores<RepositoryContext>()
+        .AddDefaultTokenProviders();
+    }
+
+
+    public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
+    {
+        var jwtSettings = configuration.GetSection("JwtSettings");
+        var secretKey = Environment.GetEnvironmentVariable("SECRET");
+
+        services.AddAuthentication(opt =>
+        {
+            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+
+                ValidIssuer = jwtSettings["validIssuer"],
+                ValidAudience = jwtSettings["validAudience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+            };
+        });
+>>>>>>> identity_and_jwt
     }
 }

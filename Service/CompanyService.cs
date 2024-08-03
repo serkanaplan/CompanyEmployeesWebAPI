@@ -22,7 +22,7 @@ internal sealed class CompanyService(IRepositoryManager repository, ILoggerManag
 
     public async Task<CompanyDto> GetCompanyAsync(Guid id, bool trackChanges)
     {
-        var company = await GetCompanyAndCheckIfItExists(id, trackChanges); 
+        var company = await GetCompanyAndCheckIfItExists(id, trackChanges);
         var companyDto = _mapper.Map<CompanyDto>(company);
         return companyDto;
     }
@@ -70,14 +70,14 @@ internal sealed class CompanyService(IRepositoryManager repository, ILoggerManag
 
     public async Task DeleteCompanyAsync(Guid companyId, bool trackChanges)
     {
-        var company = await GetCompanyAndCheckIfItExists(companyId, trackChanges); 
+        var company = await GetCompanyAndCheckIfItExists(companyId, trackChanges);
         _repository.Company.DeleteCompany(company);
         await _repository.SaveAsync();
     }
 
     public async Task UpdateCompanyAsync(Guid companyId, CompanyForUpdateDto companyForUpdate, bool trackChanges)
     {
-        var company = await GetCompanyAndCheckIfItExists(companyId, trackChanges); 
+        var company = await GetCompanyAndCheckIfItExists(companyId, trackChanges);
         _mapper.Map(companyForUpdate, company);
         await _repository.SaveAsync();
     }
