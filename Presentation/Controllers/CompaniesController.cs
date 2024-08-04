@@ -2,39 +2,46 @@ using CompanyEmployees.Presentation.Filters;
 using CompanyEmployees.Presentation.ModelBinders;
 using Contracts.ServiceContracts;
 using Entities.DTO;
+using Entities.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Extensions;
 
-namespace CompanyEmployees.Presentation.Controllers;
+namespace Presentation.Controllers;
 
 [ApiVersion("1.0")]
 [Route("api/companies")]
 [ApiController]
 [ApiExplorerSettings(GroupName = "v1")]
-public class CompaniesController(IServiceManager service) : ControllerBase
+public class CompaniesController(IServiceManager service) : ApiControllerBase
 {
     private readonly IServiceManager _service = service;
 
-    /// <summary> 
-    /// Gets the list of all companies 
-    /// </summary> 
-    /// <returns>The companies list</returns> 
-    // [HttpHead]
     [HttpGet]
     [Authorize]
     [Authorize(Roles = "Manager")]
-    public async Task<IActionResult> GetCompanies()
+    // public async Task<IActionResult> GetCompanies()
+    public IActionResult GetCompanies()
     {
-        var companies = await _service.CompanyService.GetAllCompaniesAsync(trackChanges: false);
+        // var companies = await _service.CompanyService.GetAllCompaniesAsync(trackChanges: false);
+
+        var baseResult = _service.CompanyService.GetAllCompanies(trackChanges: false);
+        // var companies = ((ApiOkResponse<IEnumerable<CompanyDto>>)baseResult).Result;
+        var companies = baseResult.GetResult<IEnumerable<CompanyDto>>();
         return Ok(companies);
     }
 
 
     [HttpGet("{id:guid}", Name = "CompanyById")]
     [Authorize(Roles = "Administrator")]
-    public async Task<IActionResult> GetCompany(Guid id)
+    // public async Task<IActionResult> GetCompany(Guid id)
+    public IActionResult GetCompany(Guid id)
     {
-        var company = await _service.CompanyService.GetCompanyAsync(id, trackChanges: false);
+        // var company = await _service.CompanyService.GetCompanyAsync(id, trackChanges: false);
+        var baseResult = _service.CompanyService.GetCompany(id, trackChanges: false);
+        if (!baseResult.Success) return ProcessError(baseResult);
+        // var company = ((ApiOkResponse<CompanyDto>)baseResult).Result;
+        var company = baseResult.GetResult<CompanyDto>(); 
         return Ok(company);
     }
 

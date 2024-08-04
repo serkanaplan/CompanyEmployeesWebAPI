@@ -3,7 +3,7 @@ using Contracts.ServiceContracts;
 using Entities.DTO;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CompanyEmployees.Presentation.Controllers;
+namespace Presentation.Controllers;
 
 //  tokenın  süresi  dolmak  üzereyse,  api/token  uç  noktasına  istekte  bulunun  ve  yeni  bir  geçerli  token  alın.
 [Route("api/[controller]")]
