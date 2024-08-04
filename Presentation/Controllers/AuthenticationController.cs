@@ -3,7 +3,7 @@ using Contracts.ServiceContracts;
 using Entities.DTO;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CompanyEmployees.Presentation.Controllers;
+namespace Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

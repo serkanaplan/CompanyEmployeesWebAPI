@@ -6,7 +6,7 @@ using Entities.RequestFeatures;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CompanyEmployees.Presentation.Controllers;
+namespace Presentation.Controllers;
 
 // Alternatif olarak, /api/employees gibi düz bir yapı da kullanılabilirdi, ancak mevcut yapı daha zengin ve ilişkisel bir API tasarımı sunar. Bu, özellikle karmaşık iş mantığı ve veri ilişkileri olan sistemlerde faydalıdır.
 [Route("api/companies/{companyId}/[controller]")]
